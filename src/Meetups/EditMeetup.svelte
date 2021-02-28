@@ -2,6 +2,7 @@
     import TextInput from '../UI/TextInput.svelte';
     import {createEventDispatcher} from 'svelte';
     import Modal from '../UI/Modal.svelte';
+    import Button from '../UI/Button.svelte';
 
     let title = '';
     let subtitle = '';
@@ -21,6 +22,10 @@
             description: description,
             imageUrl: imageUrl
         });
+    }
+
+    function cancel() {
+        dispatch('cancel');
     }
 </script>
 
@@ -57,9 +62,12 @@
             value={description} 
             type="textarea"
             rows="3"
-            on:input={event => (description = event.target.value)}/>
-        <!-- <Button type="submit">Save</Button> -->
+            on:input={event => (description = event.target.value)}/>        
     </form>
+    <div slot="footer">
+        <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
+        <Button type="button" on:click={submitForm}>Save</Button>
+    </div> 
 </Modal>
 <style>
     form {
