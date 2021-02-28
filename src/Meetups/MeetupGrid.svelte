@@ -6,9 +6,12 @@
 
 <section>
     {#each meetups as meetup}
-        <MeetupItem title={meetup.title} subtitle={meetup.subtitle}
+        <MeetupItem id={meetup.id} title={meetup.title} 
+            subtitle={meetup.subtitle}
             description={meetup.description} imageUrl={meetup.imageUrl}
-            email={meetup.contactEmail} address={meetup.address}/>
+            email={meetup.contactEmail} address={meetup.address}
+            isFav={meetup.isFavourite}
+            on:toggle-favourite/>
     {/each}
 </section>
 

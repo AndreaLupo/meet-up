@@ -9,7 +9,8 @@
 {#if href}
     <a {href}>{caption}</a>
 {:else}
-    <button class="{mode}" {type}>{caption}</button>
+    <!-- on:click forwards the event to the father component, which can handle it -->
+    <button class="{mode}" {type} on:click>{caption}</button>
 {/if}
 
 <style>
