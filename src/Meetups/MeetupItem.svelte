@@ -36,15 +36,18 @@
     </div>
 
     <footer>
-        <Button href="mailto:{email}" caption="Contact"/>
+        <Button href="mailto:{email}" >Contact</Button>
 
         <Button type="button" 
           mode="outline"  
           color={isFav? null: 'success'} 
-          caption="{isFav ? 'Unfavourite' : 'Favourite'}" 
-          on:click={() => dispatch('toggle-favourite', id)}/>
+          on:click={() => dispatch('toggle-favourite', id)}>
+          {isFav ? 'Unfavourite' : 'Favourite'}
+        </Button>
 
-        <Button type="button"  caption="Show details"/>
+        <Button type="button">
+          Show details  
+        </Button>
         
     </footer>
 </article>

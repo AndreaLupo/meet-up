@@ -1,6 +1,5 @@
 <script>
     export let type = 'button';
-    export let caption;
     export let href = null;
 
     export let mode = null;
@@ -8,10 +7,14 @@
 </script>
 
 {#if href}
-    <a {href}>{caption}</a>
+    <a {href}>
+      <slot/>
+    </a>
 {:else}
     <!-- on:click forwards the event to the father component, which can handle it -->
-    <button class="{mode} {color}" {type} on:click>{caption}</button>
+    <button class="{mode} {color}" {type} on:click>
+      <slot/>
+    </button>
 {/if}
 
 <style>
