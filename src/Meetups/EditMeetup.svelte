@@ -34,6 +34,8 @@
         <TextInput id="title" 
             label="Title" 
             value={title} 
+            valid={true}
+            validityMessage="Please enter a valid title"
             on:input={event => (title = event.target.value)}/>
 
         <TextInput id="subtitle" 

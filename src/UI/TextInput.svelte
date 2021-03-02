@@ -5,6 +5,10 @@
     export let rows = null;
     export let type = 'text';
 
+    // validation
+    export let valid = true;
+    export let validityMessage = '';
+
     export let value;
 
 </script>
@@ -13,9 +17,16 @@
     <label for="{id}">{label}</label>
     {#if controlType === 'textarea'}
         <!-- event is forwarded to father -->
-        <textarea rows={rows} {id} value={value} on:input/>
+        <textarea class:invalid="{!valid}" rows={rows} {id} value={value} on:input/>
     {:else}
-        <input {id} type={type} value={value} on:input>
+        <input class:invalid="{!valid}" {id} type={type} value={value} on:input>
+    {/if}
+
+    <!-- need also validityMessage to show a message and not an empty space -->
+    {#if validityMessage && !valid}
+        <p class="error-message">
+           {validityMessage} 
+        </p>
     {/if}
 </div>
 
@@ -51,4 +62,13 @@
     margin: 0.25rem 0;
     }
 
+    .invalid {
+        border-color: red;
+        background: #fde3e3;
+    }
+
+    .error-message {
+        color: red;
+        margin: 0.25rem 0;
+    }
 </style>
