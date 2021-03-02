@@ -11,19 +11,22 @@
 
     export let value;
 
+    let touched = false;
 </script>
 
 <div class="form-control">
     <label for="{id}">{label}</label>
     {#if controlType === 'textarea'}
         <!-- event is forwarded to father -->
-        <textarea class:invalid="{!valid}" rows={rows} {id} value={value} on:input/>
+        <textarea class:invalid="{!valid && touched}" rows={rows} {id} value={value} on:input
+            on:blur={() => touched = true}/>
     {:else}
-        <input class:invalid="{!valid}" {id} type={type} value={value} on:input>
+        <input class:invalid="{!valid && touched}" {id} type={type} value={value} on:input
+            on:blur={() => touched = true}>
     {/if}
 
     <!-- need also validityMessage to show a message and not an empty space -->
-    {#if validityMessage && !valid}
+    {#if validityMessage && !valid && touched}
         <p class="error-message">
            {validityMessage} 
         </p>
