@@ -5,18 +5,15 @@
     import Button from '../UI/Button.svelte';
     import { isEmpty, isValidEmail } from '../helpers/validation';
 
+    /* I can remove all the declaration of xValid variables, because they're created when
+    the validation function is triggered, i.e. at the loading of the component */
     let title = '';
-    let titleValid = false;
     let subtitle = '';
-    let subtitleValid = false;
     let address = '';
-    let addressValid = false;
     let email = '';
-    let emailValid = false;
     let imageUrl = '';
-    let imageUrlValid = false;
     let description = '';
-    let descriptionValid = false;
+
 
     const dispatch = createEventDispatcher();
 
@@ -28,7 +25,8 @@
     $:descriptionValid = !isEmpty(description);
     $:imageUrlValid = !isEmpty(imageUrl);
     $:emailValid = isValidEmail(email);
-
+    $:formIsValid = titleValid && subtitleValid && addressValid && descriptionValid && imageUrlValid
+                    && emailValid;
 
     function submitForm() {
         dispatch('save', {
@@ -79,23 +77,22 @@
         <TextInput id="email" 
             label="Email" 
             value={email} 
-            type="email"
+            controlType="email"
             valid={emailValid}
             validityMessage="Please enter a valid email address"
             on:input={event => (email = event.target.value)}/>
     
         <TextInput id="description" 
             label="Description" 
-            value={description} 
-            type="textarea"
+            controlType="textarea"
             rows="3"
             valid={descriptionValid}
             validityMessage="Please enter a valid description"
-            on:input={event => (description = event.target.value)}/>        
+            bind:value={description}/>        
     </form>
     <div slot="footer">
         <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
-        <Button type="button" on:click={submitForm}>Save</Button>
+        <Button type="button" disabled={!formIsValid} on:click={submitForm}>Save</Button>
     </div> 
 </Modal>
 <style>

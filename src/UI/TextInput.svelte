@@ -18,9 +18,10 @@
     <label for="{id}">{label}</label>
     {#if controlType === 'textarea'}
         <!-- event is forwarded to father -->
-        <textarea class:invalid="{!valid && touched}" rows={rows} {id} value={value} on:input
+        <textarea class:invalid="{!valid && touched}" rows={rows} {id} bind:value={value}
             on:blur={() => touched = true}/>
     {:else}
+        <!-- can't set bind:value={value} because the type is variable -->
         <input class:invalid="{!valid && touched}" {id} type={type} value={value} on:input
             on:blur={() => touched = true}>
     {/if}

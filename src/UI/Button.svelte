@@ -4,6 +4,7 @@
 
     export let mode = null;
     export let color = null;
+    export let disabled = false;
 </script>
 
 {#if href}
@@ -12,7 +13,7 @@
     </a>
 {:else}
     <!-- on:click forwards the event to the father component, which can handle it -->
-    <button class="{mode} {color}" {type} on:click>
+    <button class="{mode} {color}" {type} on:click {disabled}>
       <slot/>
     </button>
 {/if}
