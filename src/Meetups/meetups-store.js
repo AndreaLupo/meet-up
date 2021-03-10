@@ -26,9 +26,7 @@ const meetups = writable([
 
 const customMeetupStore = {
     subscribe: meetups.subscribe,
-    fuck: function() {
-        console.log('Fuck');
-    },
+
     addMeetup: meetupData => {
         const newMeetup = {
             ...meetupData,

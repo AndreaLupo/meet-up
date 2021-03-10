@@ -11,26 +11,11 @@ let editMode = null;
 function addMeetup(event) {
     // event is the object emitted inside the editMeetup component
     // keys has to be equal to MeetupItem variables
-    const meetUp = {
-        title: event.detail.title,
-        subtitle: event.detail.subtitle,
-        description: event.detail.description,
-        address: event.detail.address,
-        email: event.detail.email,
-        imageUrl: event.detail.imageUrl
-    };
-
-    meetupsStore.fuck();
-    meetupsStore.addMeetup(meetUp);
-
+    
     editMode = null;
 }
 
-function toggleFavourite(event) {
-    const id = event.detail;
-    
-    meetupsStore.toggleFavourite(id);
-}
+
 
 function cancelEdit() {
     editMode = null;
@@ -53,8 +38,7 @@ function cancelEdit() {
         <EditMeetup on:save={addMeetup} on:cancel={cancelEdit}/>
     {/if}
 
-    <MeetupGrid meetups={$meetupsStore}
-            on:toggle-favourite={toggleFavourite}></MeetupGrid>
+    <MeetupGrid meetups={$meetupsStore}></MeetupGrid>
     
 </main>
 

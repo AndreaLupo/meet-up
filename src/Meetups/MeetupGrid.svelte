@@ -10,8 +10,7 @@
             subtitle={meetup.subtitle}
             description={meetup.description} imageUrl={meetup.imageUrl}
             email={meetup.contactEmail} address={meetup.address}
-            isFav={meetup.isFavourite}
-            on:toggle-favourite/>
+            isFav={meetup.isFavourite}/>
     {/each}
 </section>
 

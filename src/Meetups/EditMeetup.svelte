@@ -4,6 +4,7 @@
     import Modal from '../UI/Modal.svelte';
     import Button from '../UI/Button.svelte';
     import { isEmpty, isValidEmail } from '../helpers/validation';
+    import meetupsStore from './meetups-store';
 
     /* I can remove all the declaration of xValid variables, because they're created when
     the validation function is triggered, i.e. at the loading of the component */
@@ -29,17 +30,23 @@
                     && emailValid;
 
     function submitForm() {
-        dispatch('save', {
+        const meetUp = {
             title: title,
             subtitle: subtitle,
-            address: address,
-            email: email, 
             description: description,
+            address: address,
+            email: email,
             imageUrl: imageUrl
-        });
+        };
+
+        meetupsStore.addMeetup(meetUp);
+
+        // used to close the modal
+        dispatch('save');
     }
 
     function cancel() {
+        // used to close the modal
         dispatch('cancel');
     }
 </script>
