@@ -8,20 +8,22 @@ import MeetupDetail from './Meetups/MeetupDetail.svelte';
 import meetupsStore from './Meetups/meetups-store';
 
 let editMode = null;
+let editedId;
 
 let page = 'overview';
 let pagedata = {};
 
-function addMeetup(event) {
+function saveMeetup(event) {
     // event is the object emitted inside the editMeetup component
     // keys has to be equal to MeetupItem variables
     
     editMode = null;
+    editedId = null;
 }
 
 function cancelEdit() {
     editMode = null;
-    
+    editedId = null;
 }
 
 function showDetails(event) {
@@ -34,6 +36,11 @@ function closeDetails(event) {
     pagedata = {};
 }
 
+function startEdit(event) {
+    editMode = 'edit';
+    editedId = event.detail; 
+}
+
 </script>
 
 <Header/>
@@ -41,16 +48,17 @@ function closeDetails(event) {
 <main>
 {#if page == 'overview'}
     <div class="meetup-controls">
-        <Button on:click={() => editMode = 'add'}>
+        <Button on:click={() => editMode = 'edit'}>
             New meetup
         </Button>
     </div>
     
-    {#if editMode == 'add'}
-        <EditMeetup on:save={addMeetup} on:cancel={cancelEdit}/>
+    {#if editMode == 'edit'}
+        <EditMeetup id={editedId} on:save={saveMeetup} on:cancel={cancelEdit}/>
     {/if}
 
-    <MeetupGrid meetups={$meetupsStore} on:showdetails={showDetails}></MeetupGrid>
+    <MeetupGrid meetups={$meetupsStore} on:showdetails={showDetails}
+        on:edit={startEdit}></MeetupGrid>
 {:else}
     <MeetupDetail id={pagedata.id} on:close={closeDetails}/>
 {/if}  

@@ -47,6 +47,10 @@
     </div>
 
     <footer>
+        <Button mode="outline" on:click={() => dispatch('edit', id)}>
+          Edit
+        </Button>
+        
         <Button href="mailto:{email}" >Contact</Button>
 
         <Button type="button" 

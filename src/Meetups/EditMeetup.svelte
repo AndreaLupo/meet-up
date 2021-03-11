@@ -6,6 +6,8 @@
     import { isEmpty, isValidEmail } from '../helpers/validation';
     import meetupsStore from './meetups-store';
 
+    export let id = null;
+
     /* I can remove all the declaration of xValid variables, because they're created when
     the validation function is triggered, i.e. at the loading of the component */
     let title = '';
@@ -14,6 +16,23 @@
     let email = '';
     let imageUrl = '';
     let description = '';
+
+    /* Add the subscription to the store only if the id is set
+    */
+    if(id) {
+        const unsubscribe = meetupsStore.subscribe(items => {
+            const selectedMeetup = items.find(item => item.id === id);
+            title = selectedMeetup.title;
+            subtitle = selectedMeetup.subtitle;
+            address = selectedMeetup.address;
+            email = selectedMeetup.contactEmail;
+            imageUrl = selectedMeetup.imageUrl;
+            description = selectedMeetup.description;
+        });
+
+        unsubscribe();
+    }
+    
 
 
     const dispatch = createEventDispatcher();
@@ -39,7 +58,13 @@
             imageUrl: imageUrl
         };
 
-        meetupsStore.addMeetup(meetUp);
+        if(id) {
+            meetupsStore.updateMeetup(id, meetUp);
+        }
+        else {
+            meetupsStore.addMeetup(meetUp);
+        }
+        
 
         // used to close the modal
         dispatch('save');

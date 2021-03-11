@@ -37,6 +37,16 @@ const customMeetupStore = {
             return [newMeetup, ...items];
         });
     },
+    updateMeetup: (id, meetupData) => {
+        meetups.update(items => {
+            const meetupIndex = items.findIndex(item => item.id === id);
+            // update the meetup overriding the previous version (created a copy)
+            const updatedMeetup = { ...items[meetupIndex], ...meetupData};
+            const updatedMeetups = [...items];
+            updatedMeetups[meetupIndex] = updatedMeetup;
+            return updatedMeetups;
+        });
+    },
     toggleFavourite: id => {
         meetups.update(items => {
             // get the element with the requested id as a new object, not a reference type!
