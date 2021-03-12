@@ -74,6 +74,12 @@
         // used to close the modal
         dispatch('cancel');
     }
+
+    function deleteMeetup() {
+        meetupsStore.deleteMeetup(id);
+        // close the modal
+        dispatch('save');
+    }
 </script>
 
 <Modal title="Edit meetup detail" on:cancel>
@@ -125,6 +131,9 @@
     <div slot="footer">
         <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
         <Button type="button" disabled={!formIsValid} on:click={submitForm}>Save</Button>
+        {#if id}
+            <Button on:click={deleteMeetup}>Delete</Button>
+        {/if}
     </div> 
 </Modal>
 <style>
