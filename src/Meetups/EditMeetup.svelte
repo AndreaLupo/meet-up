@@ -5,7 +5,6 @@
     import Button from '../UI/Button.svelte';
     import { isEmpty, isValidEmail } from '../helpers/validation';
     import meetupsStore from './meetups-store';
-
     export let id = null;
 
     /* I can remove all the declaration of xValid variables, because they're created when

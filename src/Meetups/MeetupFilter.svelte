@@ -1,12 +1,25 @@
 <script>
-    import {createEventDispatcher} from 'svelte';
+    import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
 
+    let selectedButton = 0;
 </script>
 <div>
-    <button type="button" onclick={() => {dispatch('select', 0)}}>All</button>
-    <button type="button" onclick={() => {dispatch('select', 1)}}>Favourites</button>
+    <button type="button" class:active={selectedButton === 0} 
+        on:click={() => {
+            selectedButton = 0;
+            dispatch('select', 0);
+        }}>
+        All
+    </button>
+    <button type="button" class:active={selectedButton === 1}
+        on:click={() => {
+            selectedButton = 1;
+            dispatch('select', 1);
+        }}>
+        Favourites
+    </button>
 </div>
 
 <style>
