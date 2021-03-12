@@ -47,6 +47,12 @@ const customMeetupStore = {
             return updatedMeetups;
         });
     },
+    deleteMeetup: id => {
+        meetups.update(items => {
+            // create a new array
+            return items.filter(item => item.id !== id);
+        });
+    },
     toggleFavourite: id => {
         meetups.update(items => {
             // get the element with the requested id as a new object, not a reference type!
