@@ -12,7 +12,7 @@
     let title = '';
     let subtitle = '';
     let address = '';
-    let email = '';
+    let contactEmail = '';
     let imageUrl = '';
     let description = '';
 
@@ -24,7 +24,7 @@
             title = selectedMeetup.title;
             subtitle = selectedMeetup.subtitle;
             address = selectedMeetup.address;
-            email = selectedMeetup.contactEmail;
+            contactEmail = selectedMeetup.contactEmail;
             imageUrl = selectedMeetup.imageUrl;
             description = selectedMeetup.description;
         });
@@ -43,7 +43,7 @@
     $:addressValid = !isEmpty(subtitle);
     $:descriptionValid = !isEmpty(description);
     $:imageUrlValid = !isEmpty(imageUrl);
-    $:emailValid = isValidEmail(email);
+    $:emailValid = isValidEmail(contactEmail);
     $:formIsValid = titleValid && subtitleValid && addressValid && descriptionValid && imageUrlValid
                     && emailValid;
 
@@ -53,12 +53,26 @@
             subtitle: subtitle,
             description: description,
             address: address,
-            email: email,
+            contactEmail: contactEmail,
             imageUrl: imageUrl
         };
 
         if(id) {
-            meetupsStore.updateMeetup(id, meetUp);
+            // remove the id key when updating!
+            fetch(`https://svelte-course-a2f4f-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+                method: 'PATCH', // override only data provided - i.e. isFavourite is left as is
+                body: JSON.stringify(meetUp),
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then(res => {
+                if(!res.ok) {
+                    throw new Error('Erroooor!');
+                }
+                meetupsStore.updateMeetup(id, meetUp);
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
         else {
             fetch('https://svelte-course-a2f4f-default-rtdb.firebaseio.com/meetups.json', {
@@ -130,11 +144,11 @@
 
         <TextInput id="email" 
             label="Email" 
-            value={email} 
+            value={contactEmail} 
             controlType="email"
             valid={emailValid}
             validityMessage="Please enter a valid email address"
-            on:input={event => (email = event.target.value)}/>
+            on:input={event => (contactEmail = event.target.value)}/>
     
         <TextInput id="description" 
             label="Description" 
