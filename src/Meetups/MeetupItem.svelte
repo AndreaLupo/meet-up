@@ -3,6 +3,8 @@
     import Badge from '../UI/Badge.svelte';
     import meetupsStore from './meetups-store';
     import {createEventDispatcher} from 'svelte';
+   
+    
 
     export let id;
     export let title;
@@ -26,7 +28,7 @@
 
 </script>
 
-<article id="{id}">
+<article id="{id}" >
     <header>
         <h1>
           {title} 
