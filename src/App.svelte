@@ -7,6 +7,8 @@ import EditMeetup from './Meetups/EditMeetup.svelte';
 import MeetupDetail from './Meetups/MeetupDetail.svelte';
 import meetupsStore from './Meetups/meetups-store';
 import LoadingSpinner from './UI/LoadingSpinner.svelte';
+import Error from './UI/Error.svelte';
+
 
 let editMode = null;
 let editedId;
@@ -14,7 +16,9 @@ let isLoading = true;
 
 let page = 'overview';
 let pagedata = {};
+let error;
 
+// change url to see error
 fetch('https://svelte-course-a2f4f-default-rtdb.firebaseio.com/meetups.json')
 .then(res => {
     if(!res.ok) {
@@ -40,7 +44,9 @@ fetch('https://svelte-course-a2f4f-default-rtdb.firebaseio.com/meetups.json')
     
 })
 .catch(err => {
-
+    isLoading = false;
+    error = err;
+    console.log(err);
 });
 
 function saveMeetup(event) {
@@ -71,7 +77,15 @@ function startEdit(event) {
     editedId = event.detail; 
 }
 
+function clearError() {
+    error = null;
+}
+
 </script>
+
+{#if error}
+    <Error message={error.message} on:cancel={clearError}></Error>
+{/if}
 
 <Header/>
 
