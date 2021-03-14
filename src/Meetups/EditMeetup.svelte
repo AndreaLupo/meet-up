@@ -61,7 +61,24 @@
             meetupsStore.updateMeetup(id, meetUp);
         }
         else {
-            meetupsStore.addMeetup(meetUp);
+            fetch('https://svelte-course-a2f4f-default-rtdb.firebaseio.com/meetups.json', {
+                method: 'POST',
+                body: JSON.stringify({ ...meetUp, isFavourite: false } ),
+                headers: {'Content-Type': 'application/json'}
+            }).then(res => {
+                if(!res.ok) {
+                    throw new Error('Error! Please try again');
+                }
+                return res.json();
+            })
+            .then(data => {
+                //console.log(data);
+                // data.name is the id given by firebase
+                meetupsStore.addMeetup({...meetUp, isFavourite: false, id: data.name});
+            })
+            .catch(err => {
+                console.log(err);
+            });
         }
         
 
