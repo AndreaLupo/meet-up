@@ -3,9 +3,8 @@
     import Badge from '../UI/Badge.svelte';
     import meetupsStore from './meetups-store';
     import {createEventDispatcher} from 'svelte';
-   
-    
 
+    
     export let id;
     export let title;
     export let subtitle;
@@ -16,7 +15,20 @@
     export let isFav;
 
     function toggleFavourite() {
-      meetupsStore.toggleFavourite(id);
+      fetch(`https://svelte-course-a2f4f-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+        method: 'PATCH',
+        body: JSON.stringify({isFavourite: !isFav}),
+        headers:  {'Content-Type': 'application/json'}
+      })
+      .then(res => {
+          if(!res.ok) {
+              throw new Error('Erroooor!');
+          }
+          meetupsStore.toggleFavourite(id);
+      })
+      .catch(err => {
+        console.log(err);
+      });
     }
 
     const dispatch = createEventDispatcher();

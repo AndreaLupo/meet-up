@@ -106,7 +106,19 @@
     }
 
     function deleteMeetup() {
-        meetupsStore.deleteMeetup(id);
+        fetch(`https://svelte-course-a2f4f-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+            method: 'DELETE'
+        })
+        .then(res => {
+            if(!res.ok) {
+                throw new Error('Erroooor!');
+            }
+            meetupsStore.deleteMeetup(id);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+        
         // close the modal
         dispatch('save');
     }
