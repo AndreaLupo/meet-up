@@ -37,7 +37,8 @@
             isFav={meetup.isFavourite}
             on:showdetails on:edit/>
         </div>    
-    
+    {:else}
+        <p id="noMeetups">No filtered meetups found, please add some.</p>
     {/each}
 </section>
 
@@ -61,4 +62,7 @@
         }
     }
 
+    #noMeetups {
+        padding: 1rem;
+    }
 </style>
